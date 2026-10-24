@@ -1,105 +1,165 @@
-# ⚡ Intelligent API Monitoring & Alert System
+⚡ Intelligent API Monitoring & Alert System
 
-An advanced, full-stack API monitoring and automated incident response platform. This application integrates automated anomaly detection, real-time root-cause analysis powered by Google's Gemini models, database persistence, automated email dispatching, and a modern, interactive React operator dashboard.
+An advanced, full-stack API monitoring and automated incident response platform. This application integrates automated batch normalization, rule-based anomaly detection, real-time root-cause analysis powered by Google's Gemini models (gemini-3.8-flash), MongoDB Atlas persistence, automated email dispatching via Nodemailer, and a modern, interactive React operator dashboard.
 
-✨ **Features**
+✨ Features
 
-- **Autonomous Anomaly Detection**: Evaluates incoming API requests and flags performance breakdowns based on status codes (such as HTTP 5xx server crashes and 4xx client errors), response latency thresholds, and empty payload returns.
-- **Gemini AI Root-Cause Analysis**: Integrates the official `@google/genai` SDK (`gemini-3.8-flash`) to generate concise, professional operational triage summaries for every detected anomaly, complete with built-in production resiliency and graceful fallback handling.
-- **Database Persistence**: Fully persists incident logs, metric history, and AI-generated insights to **MongoDB Atlas** using robust Mongoose ODM schemas.
-- **Automated Incident Notifications**: Instantly dispatches rich, automated email alerts to system administrators via **Nodemailer** upon anomaly detection.
-- **Interactive Operator Dashboard**: Clean, responsive React (Vite) interface featuring real-time auto-refresh polling, dynamic risk classification filters (`HIGH`, `MEDIUM`, `LOW`), and live incident lifecycle management (marking alerts as resolved or deleting logs).
+Autonomous API Health Monitoring: Evaluates API performance across latency thresholds, HTTP status codes (5xx server failures and 4xx client errors), and payload validity (missing or zero records).
 
----
+Batch & Single Input Processing: Supports both single metric JSON payloads and multi-item batch arrays through input normalization at the /monitor REST endpoint.
 
-🛠️ **Tech Stack & Packages**
+Auto-Resolution Engine: Automatically updates active anomalies to a Resolved state when a subsequent healthy check (status 200, normal latency, valid records) is received for that endpoint.
 
-### **Backend Stack (`backend/package.json`)**
-- **`express`**: Fast web framework for routing and API endpoint handling.
-- **`mongoose`**: Elegant MongoDB object modeling for schema definition and persistence.
-- **`@google/genai`**: Official Google Gen AI SDK utilizing `gemini-3.8-flash` for automated root-cause analysis.
-- **`nodemailer`**: Node.js module used for dispatching automated incident alert emails.
-- **`dotenv`**: Environment variable loader for managing secure credentials.
-- **`cors`**: Express middleware enabling secure cross-origin resource sharing.
-- **`nodemon`**: Development utility for automatic server restarts.
+Gemini AI Root-Cause Analysis: Integrates the official @google/genai SDK (gemini-3.8-flash) to generate concise, human-readable operational alerts and root-cause summaries with built-in production resiliency and fallback handling.
 
-### **Frontend Stack (`frontend/package.json`)**
-- **`react` / `react-dom`**: Frontend library for building dynamic component states and user interfaces.
-- **`vite`**: Next-generation frontend bundling tool and lightning-fast development server.
+Database Persistence: Stores active anomalies, metric logs, and AI summaries directly in MongoDB Atlas using robust Mongoose schemas.
 
----
+Automated Incident Email Alerts: Instantly dispatches automated email notifications to administrators via Nodemailer upon detecting an anomaly.
 
-📁 **Repository Structure**
+Interactive Operator Dashboard: Modern React (Vite) interface featuring real-time auto-refresh polling, dynamic risk classification filtering (HIGH, MEDIUM, LOW), and incident lifecycle management (marking alerts resolved or deleting logs).
 
-```text
+🛠️ Tech Stack & Packages
+
+Backend Stack (backend/package.json)
+
+Runtime & Framework: Node.js, Express.js
+
+Database: MongoDB Atlas via mongoose ODM
+
+AI Integration: @google/genai SDK utilizing the gemini-3.8-flash model
+
+Alerting & Email: nodemailer
+
+Utilities: dotenv (environment variables), cors (cross-origin resource sharing), nodemon (development hot-reloading)
+
+Frontend Stack (frontend/package.json)
+
+Library: React 18, React DOM
+
+Build Tool & Server: Vite
+
+📁 Repository Structure
+
 Care_Guide_Task/
 ├── backend/
 │   ├── src/
 │   │   ├── config/
-│   │   │   └── database.js         # MongoDB database connection configuration
+│   │   │   └── database.js         # MongoDB connection setup
 │   │   ├── controllers/
-│   │   │   ├── alertController.js    # CRUD handlers for alert resolution and deletion
-│   │   │   └── monitorController.js  # Main monitoring workflow and Google Gemini SDK integration
+│   │   │   ├── alertController.js    # CRUD handlers for fetching, resolving, and deleting alerts
+│   │   │   └── monitorController.js  # Batch normalization, health pipeline, & Gemini AI integration
 │   │   ├── models/
-│   │   │   └── Alert.js              # Mongoose schema definitions for API metrics and logs
+│   │   │   └── Alert.js              # Mongoose schema for anomaly storage
 │   │   ├── routes/
-│   │   │   ├── alertRoutes.js        # REST endpoints for fetching and updating alerts
-│   │   │   └── monitorRoutes.js      # Endpoint triggering the core monitoring pipeline
+│   │   │   ├── alertRoutes.js        # REST routes (/alerts)
+│   │   │   └── monitorRoutes.js      # Core monitoring route (/monitor)
 │   │   ├── services/
-│   │   │   ├── anomalyDetector.js    # Rule-based threshold evaluation engine
-│   │   │   └── emailService.js       # Nodemailer automated notification service
-│   │   ├── app.js                    # Express application configuration and middleware
+│   │   │   ├── anomalyDetector.js    # Anomaly evaluation engine
+│   │   │   └── emailService.js       # Nodemailer email dispatching service
+│   │   ├── app.js                    # Express app middleware configuration
 │   │   └── server.js                 # Server entry point
-│   ├── .env                          # Environment variables configuration
+│   ├── .env.example                  # Template for environment variables (tracked)
+│   ├── .env                          # Local environment variables (ignored in Git)
 │   └── package.json
 └── frontend/
     ├── src/
     │   ├── components/
-    │   │   ├── AlertTable.jsx        # Data grid rendering risks, AI summaries, and actions
-    │   │   ├── Dashboard.jsx         # Core state container, polling, and risk filter logic
-    │   │   └── SummaryCards.jsx      # Top-level operational metrics overview
+    │   │   ├── AlertTable.jsx        # Table grid showing risks, AI summaries, and actions
+    │   │   ├── Dashboard.jsx         # Main container with state management, polling, and risk filters
+    │   │   └── SummaryCards.jsx      # Top metric cards for quick operational overview
     │   ├── App.jsx
     │   └── main.jsx
     └── package.json
 
 
-⚙️ Setup Instructions
+⚙️ Installation & Setup Instructions
 
-1. Backend Setup & Dependencies
-Navigate to the backend directory and install required packages:
+1. Clone the Repository
 
-     cd backend
-     npm install
+git clone https://github.com/your-username/Care_Guide_Task.git
+cd Care_Guide_Task
 
-2. Configure Environment Variables
-Create a .env file inside the backend/ directory with your configuration:
 
-    PORT=5000
-    MONGO_URI=your_mongodb_atlas_connection_string
-    GEMINI_API_KEY=your_google_gemini_api_key
-    EMAIL_USER=your_email@gmail.com
-    EMAIL_PASS=your_email_app_password
+2. Backend Setup
 
-3. Frontend Setup & Dependencies
-Navigate to the frontend directory and install packages:
+Navigate to the backend directory and install dependencies:
 
-    cd frontend
-    npm install
+cd backend
+npm install
+
+
+Configure environment variables:
+Create a .env file in the backend/ directory (you can copy .env.example if available):
+
+PORT=5000
+MONGO_URI=mongodb+srv://<username>:<password>@cluster0.example.mongodb.net/api_monitor?retryWrites=true&wmode=majority
+GEMINI_API_KEY=your_google_gemini_api_key_here
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_gmail_app_password
+SLOW_RESPONSE_MS=3000
+
+
+⚠️ Note: Make sure to replace the dummy credentials with your real MongoDB connection URI, Google Gemini API Key, and Email App Password.
+
+3. Frontend Setup
+
+Navigate to the frontend directory and install dependencies:
+
+cd ../frontend
+npm install
 
 
 ▶️ Run Instructions
 
 1. Start the Backend Server
-In your first terminal window, start the Node.js/Express backend server:
 
-    cd backend
-    npm run dev 
+From the backend directory, run:
+
+npm run dev
+
+
+The Express server will start on http://localhost:5000 (or your configured PORT) and connect to MongoDB Atlas.
 
 2. Start the Frontend Dashboard
-In a separate terminal window, start the React development server:
 
-    cd frontend
-    npm run dev
+In a separate terminal window, navigate to the frontend directory and run:
+
+npm run dev
+
+
+Open your browser and navigate to the local Vite dev server URL (typically http://localhost:5173).
+
+🧪 Testing API Monitoring Endpoint (/monitor)
+
+You can send both single objects or batch JSON arrays to POST http://localhost:5000/monitor.
+
+Single Metric / Anomaly Example:
+
+{
+  "api_name": "AppointmentAPI",
+  "response_time_ms": 5500,
+  "status_code": 500,
+  "records_returned": 0
+}
+
+
+Batch Processing Example:
+
+[
+  {
+    "api_name": "PatientLookupAPI",
+    "response_time_ms": 450,
+    "status_code": 404,
+    "records_returned": 0
+  },
+  {
+    "api_name": "BillingServiceAPI",
+    "response_time_ms": 150,
+    "status_code": 200,
+    "records_returned": 12
+  }
+]
+
 
 📜 License & Copyright
 © All rights reserved to Asaduzzaman Shihab.

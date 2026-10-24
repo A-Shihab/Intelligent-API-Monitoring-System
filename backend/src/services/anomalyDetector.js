@@ -1,6 +1,3 @@
-/**
- * Evaluates API response metrics to detect potential anomalies.
- */
 function detectAnomaly(metric) {
   const slowThreshold = parseInt(process.env.SLOW_RESPONSE_MS) || 3000;
   const reasons = [];
