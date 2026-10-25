@@ -38,15 +38,15 @@ Library: React 18, React DOM
 
 Build Tool & Server: Vite
 
-📁 Repository Structure
+📁 **Repository Structure**
 
+```text
 Care_Guide_Task/
 ├── backend/
 │   ├── src/
 │   │   ├── config/
 │   │   │   └── database.js         # MongoDB connection setup
 │   │   ├── controllers/
-│   │   │   ├── alertController.js    # CRUD handlers for fetching, resolving, and deleting alerts
 │   │   │   └── monitorController.js  # Batch normalization, health pipeline, & Gemini AI integration
 │   │   ├── models/
 │   │   │   └── Alert.js              # Mongoose schema for anomaly storage
